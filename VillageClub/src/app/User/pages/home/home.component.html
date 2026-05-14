@@ -1,320 +1,66 @@
 <app-header-user></app-header-user>
 
-<div id="default-carousel" class="relative w-full mt-8" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="สนามเทนนิส.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">สนามเทนนิส</div>
-            
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="สนามแบต.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">สนามแบตมินตัน</div>
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="สระว่ายน้ำ.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">สระว่ายน้ำ</div>
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="โต๊ะสนุ๊ก.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">สนุ๊กเกอร์</div>
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="ห้องจัดเลี้ยง.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">ห้องจัดเลี้ยง</div>
-        </div>
-        <!-- Item 6 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="สนามฟุตบอล.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <div class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-2xl font-thin">สนามฟุตบอล</div>
-        </div>
-    </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 6" data-carousel-slide-to="5"></button>
-    </div>
-    <!-- Slider controls -->
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
-
-<div class="py-7">
-<div class="flex items-center">
-    <hr class="flex-grow border-gray-300">
-    <span class="py-4 px-4 font-bold text-4xl text-white">SPORT CLUB</span>
-    <hr class="flex-grow border-gray-300">
-   
-  </div>
-</div>
-
-
-  <article class="ml-8 prose lg:prose-lg mx-auto text-white text-center mt-4 p-6 bg-gray-800 rounded-lg shadow  px-16 ">
-    
-    <p class="text-center ">
-      สนามกีฬาของบ้านดี สนับสนุนให้คนหันมาออกกำลังกาย เล่นกีฬา และรักษาสุขภาพ  
-      สนามกีฬาและพื้นที่พักผ่อนมีคุณภาพสูง  
-      สนามฟุตบอลมีทั้งในร่มและกลางแจ้ง พร้อมหญ้าคุณภาพดี และพื้นสนามเรียบไม่มีหลุม  
-      สนามแบดมินตัน,สนามเทนนิส มีมากกว่า <strong>10 คอร์ต</strong>  
-      สระว่ายน้ำมีทั้งแบบในร่มและกลางแจ้ง ห้องจัดเลี้ยงและฟิตเนสมีคลาสออกกำลังกายที่หลากหลาย  
-      พร้อมเทรนเนอร์ที่คอยช่วยเหลือ อุปกรณ์สะอาด ปลอดภัย และพร้อมใช้งาน  
-    </p>
-
-  </article>
-
-  <div class="grid grid-cols-5 gap-6 p-6 ">
-    <!-- FITNESS -->
-    <div class="flex flex-col items-center ">
-      <img src="logoFitness.webp" alt="Fitness Logo" class="w-56 h-56 rounded-full">
-      <p class="mt-2 font-semibold text-white">FITNESS</p>
-    </div>
-  
-    <!-- FOOTBALL -->
-    <div class="flex flex-col items-center ">
-      <img src="logoFootball.webp" alt="Football Logo" class="w-56 h-56 rounded-full">
-      <p class="mt-2 font-semibold text-white">FUTSAL</p>
-    </div>
-  
-    <!-- SWIM -->
-    <div class="flex flex-col items-center ">
-      <img src="logoSwimming.webp" alt="Swim Logo" class="w-56 h-56 rounded-full">
-      <p class="mt-2 font-semibold text-white">SWIM</p>
-    </div>
-  
-    <!-- BADMINTON -->
-    <div class="flex flex-col items-center ">
-      <img src="logoBatminton.webp" alt="Badminton Logo" class="w-56 h-56 rounded-full">
-      <p class="mt-2 font-semibold text-white">BADMINTON</p>
-    </div>
-     <!-- Banquet -->
-     <div class="flex flex-col items-center ">
-        <img src="logoBanquet.webp" alt="Banquet Logo" class="w-56 h-56 rounded-full">
-        <p class="mt-2 font-semibold text-white">BANQUET</p>
-      </div>
-  </div>
-
-<div class="py-7">
-  <div class="flex items-center ">
-    <hr class="flex-grow border-gray-300">
-    <span class="py-4 px-4 font-bold text-4xl text-white">Why Choose Us</span>
-    <hr class="flex-grow border-gray-300">
-   
-  </div>
-</div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-48 mb-10">
-  
-    <!-- จองคิวออนไลน์ -->
-    <div class="flex items-start gap-4">
-      <img src="logoBooking.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">จองคิวออนไลน์ได้</p>
-        <p class="text-white">
-          ลูกค้าสามารถเช่าสนามล่วงหน้า จองคิว เช็คคิว ผ่าน LINE หรือ Facebook ของทาง Tassana Garden ได้
-        </p>
+<main class="club-page">
+  <section class="home-hero">
+    <div class="home-hero-copy">
+      <p class="eyebrow">{{ text.eyebrow }}</p>
+      <h1>{{ text.title }}</h1>
+      <p>{{ text.subtitle }}</p>
+      <div class="hero-actions">
+        <a routerLink="/reservation" class="primary-link">{{ text.book }}</a>
+        <a routerLink="/status" class="secondary-link">{{ text.status }}</a>
       </div>
     </div>
-  
-    <!-- สะอาด ปลอดภัย -->
-    <div class="flex items-start gap-4">
-      <img src="cleaning.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">สะอาด ปลอดภัย</p>
-        <p class="text-white">
-          อุปกรณ์ เครื่องเล่น สนาม เราทำความสะอาดอย่างดี อยู่เสมอ เพื่อให้พร้อมใช้งานตลอดเวลา
-        </p>
-      </div>
-    </div>
-  
-    <!-- มีที่จอดรถรองรับจำนวนมาก -->
-    <div class="flex items-start gap-4">
-      <img src="parking.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">มีที่จอดรถรองรับจำนวนมาก</p>
-        <p class="text-white">
-          สถานที่ออกกำลังกายของเรา มีที่จอดรถรองรับสูงถึง 500 คน ทำให้สะดวกต่อการเดินทางมากขึ้น
-        </p>
-      </div>
-    </div>
-  
-    <!-- คอร์สที่หลากหลาย -->
-    <div class="flex items-start gap-4">
-      <img src="course.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">คอร์สที่หลากหลาย</p>
-        <p class="text-white">
-          มีคอร์สออกกำลังกายหนัก กลาง เบา ที่หลากหลายให้เลือก และเทรนเนอร์ที่มีคุณภาพให้บริการ
-        </p>
-      </div>
-    </div>
-  
-    <!-- บริการดี ใส่ใจลูกค้า -->
-    <div class="flex items-start gap-4">
-      <img src="service.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">บริการดี ใส่ใจลูกค้า</p>
-        <p class="text-white">
-          พนักงานของเราได้รับการอบรมมาเป็นอย่างดี เพื่อให้ท่านได้รับบริการที่น่าประทับใจในทุกวัน
-        </p>
-      </div>
-    </div>
-  
-    <!-- รองรับสำหรับเด็ก -->
-    <div class="flex items-start gap-4">
-      <img src="kid.webp" class="w-44 h-44">
-      <div>
-        <p class="font-bold text-2xl text-white">รองรับสำหรับเด็ก</p>
-        <p class="text-white">
-          SPORT CLUB ของเรามีคอร์สออกกำลังกายที่รองรับสำหรับเด็ก สอนตั้งแต่พื้นฐาน ถึงระดับชำนาญ
-        </p>
-      </div>
-    </div>
-  
-  </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 p-0 ">
-  
-    <!-- FUTSAL -->
-    <div class="bg-purple-400 text-white p-6 rounded-none flex flex-col items-center text-center h-full">
-      <p class="text-2xl font-bold">FUTSAL</p>
-      <img src="futsalCard.png" alt="Futsal" class="w-64 h-64">
-      <p class="mt-2 text-sm flex-grow">
-        สนามกีฬาชลบุรี สนามฟุตซอลคุณภาพดี หญ้าไม่เท่าเทียม บางจุดไม่มีหญ้าขึ้น...
-      </p>
-      <a routerLink="/reservation" class="mt-auto font-bold text-white underline py-2">VIEW MORE</a>
-    </div>
-  
-    <!-- FITNESS -->
-    <div class=" text-white p-6 rounded-none flex flex-col items-center text-center h-full">
-      <p class="text-2xl font-bold">FITNESS</p>
-      <img src="fitnessCard.png" alt="Fitness" class="w-64 h-64">
-      <p class="mt-2 text-sm flex-grow">
-        ฟิตเนสของบ้านดีย์ พร้อมบริการหลากหลาย อุปกรณ์คุณภาพดี ครบทุกเครื่องออกกำลังกาย...
-      </p>
-      <a routerLink="/reservation" class="mt-auto font-bold text-white underline py-2">VIEW MORE</a>
-    </div>
-  
-    <!-- SWIM -->
-    <div class="bg-purple-400 text-white p-6 rounded-none flex flex-col items-center text-center h-full">
-      <p class="text-2xl font-bold">SWIM</p>
-      <img src="swimmingCard.png" alt="Swim" class="w-64 h-64">
-      <p class="mt-2 text-sm flex-grow">
-        สระว่ายน้ำ น้ำสะอาด ดูแลสม่ำเสมอ ขนาดสระมาตรฐานในร่ม...
-      </p>
-      <a routerLink="/reservation" class="mt-auto font-bold text-white underline py-2">VIEW MORE</a>
-    </div>
-  
-    <!-- BADMINTON -->
-    <div class=" text-white p-6 rounded-none flex flex-col items-center text-center h-full">
-      <p class="text-2xl font-bold">BADMINTON</p>
-      <img src="batmintonCard.png" alt="Badminton" class="w-64 h-64">
-      <p class="mt-2 text-sm flex-grow">
-        สนามแบดมินตัน มีสนามรองรับผู้เล่นเยอะที่สุดในชลบุรี...
-      </p>
-      <a routerLink="/reservation" class="mt-auto font-bold text-white underline py-2">VIEW MORE</a>
-    </div>
-  
-  </div>
-  
-  <!-- Section ข้อมูล -->
-  <div class="bg-purple-400 text-white p-10 -mt-1">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      
-      <!-- ส่วนข้อความ -->
-      <div>
-        <div class="py-6"></div>
-        <h2 class="text-xl md:text-2xl font-bold ">
-          สถานที่ออกกำลังกาย ที่ได้มากกว่าการออกกำลังกาย
-        </h2>
-        <p class="mt-4 text-gray-200">
-          ด้วยบรรยากาศที่สดใส อบอุ่น เป็นกันเอง ทั้งลูกค้า เทรนเนอร์ และผู้ดูแลสนาม 
-          ไม่ใช่แค่ออกกำลังกายแต่เหมือนมาพบเพื่อน...
-        </p>
-        <p class="mt-2 text-gray-200">
-          พร้อมบริการอาหารจาก Anna’s Cafe ที่พร้อมให้บริการอาหาร 
-          สามารถสั่งมารับประทานได้ ข้าว เครื่องดื่ม ของหวาน
-        </p>
-      </div>
-  
-      <!-- ส่วนรูปภาพ -->
-      
 
-<div id="default-carousel" class="relative w-full" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="bearBatminton.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="bearFit.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="bearFootball.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="bearPool.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="bearSwim.webp" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
+    <div class="hero-media">
+      <img src="สนามเทนนิส.webp" alt="Sport club court">
+      <div class="hero-stat">
+        <span>{{ text.today }}</span>
+        <strong>12</strong>
+        <small>{{ text.bookings }}</small>
+      </div>
     </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-    </div>
-    <!-- Slider controls -->
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
+  </section>
 
+  <section class="section-shell">
+    <div class="section-heading">
+      <p class="eyebrow">{{ text.facilityEyebrow }}</p>
+      <h2>{{ text.facilityTitle }}</h2>
     </div>
-  </div>
-  
+
+    <div class="facility-grid">
+      <article *ngFor="let facility of facilities" class="facility-tile">
+        <img [src]="facility.image" [alt]="facility.name">
+        <div>
+          <h3>{{ facility.name }}</h3>
+          <p>{{ facility.copy }}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-shell benefits-shell">
+    <div class="section-heading">
+      <p class="eyebrow">{{ text.whyEyebrow }}</p>
+      <h2>{{ text.whyTitle }}</h2>
+    </div>
+
+    <div class="benefit-grid">
+      <article *ngFor="let benefit of benefits" class="benefit-card">
+        <span class="material-symbols-outlined">{{ benefit.icon }}</span>
+        <h3>{{ benefit.title }}</h3>
+        <p>{{ benefit.copy }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="home-cta">
+    <div>
+      <p class="eyebrow">{{ text.ctaEyebrow }}</p>
+      <h2>{{ text.ctaTitle }}</h2>
+    </div>
+    <a routerLink="/reservation" class="primary-link">{{ text.book }}</a>
+  </section>
+</main>
+
 <app-footer></app-footer>

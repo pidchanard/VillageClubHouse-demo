@@ -1,84 +1,98 @@
-<div class="flex h-screen">
-    <!-- ✅ Sidebar -->
-    <app-adminsidebar></app-adminsidebar>
-    
-    <!-- ✅ Main Content -->
-    <div class="flex-1 flex flex-col h-screen bg-gray-100 p-6 space-y-6">
-        <!-- 🔹 Header -->
-        <div class="flex justify-between items-center bg-white text-blue-900 p-5 rounded-xl shadow-lg">
-            <div class="flex items-center space-x-3">
-                <input type="text"  placeholder="Search..." 
-                       class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-teal-300">
-                <button (click)="performSearch()" 
-                        class="bg-teal-500 px-4 py-2 rounded-lg shadow-md hover:bg-teal-600">
-                    🔍 Search
-                </button>
-            </div>
-            <!-- <button class="bg-teal-500 px-4 py-2 rounded-lg shadow-md hover:bg-teal-600">Manage Club</button> -->
+<div class="admin-shell">
+  <app-adminsidebar></app-adminsidebar>
+
+  <main class="admin-main">
+    <section class="admin-topbar">
+      <div>
+        <p class="admin-eyebrow">Admin Dashboard</p>
+        <h1>Club overview</h1>
+      </div>
+      <div class="admin-search">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" placeholder="Search dashboard..." [(ngModel)]="searchQuery">
+        <button type="button" (click)="performSearch()">Search</button>
+      </div>
+    </section>
+
+    <section class="admin-stats">
+      <article class="admin-stat-card">
+        <span>Total Members</span>
+        <strong>150</strong>
+        <small>Registered club members</small>
+      </article>
+      <article class="admin-stat-card success">
+        <span>Active Reservations</span>
+        <strong>32</strong>
+        <small>Bookings currently active</small>
+      </article>
+      <article class="admin-stat-card warning">
+        <span>Pending Payments</span>
+        <strong>12</strong>
+        <small>Waiting for confirmation</small>
+      </article>
+      <article class="admin-stat-card teal">
+        <span>Available Facilities</span>
+        <strong>8</strong>
+        <small>Ready for booking</small>
+      </article>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-header">
+        <div>
+          <p class="admin-eyebrow">Reservations</p>
+          <h2>Recent reservations</h2>
         </div>
-        
-        <!-- 🔹 Key Statistics -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-lg font-semibold">Total Members</p>
-                <p class="text-3xl font-bold text-blue-600">150</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-lg font-semibold">Active Reservations</p>
-                <p class="text-3xl font-bold text-green-600">32</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-lg font-semibold">Pending Payments</p>
-                <p class="text-3xl font-bold text-red-600">12</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-lg font-semibold">Available Facilities</p>
-                <p class="text-3xl font-bold text-teal-600">8</p>
-            </div>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Facility</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reservation of reservations">
+              <td>{{ reservation.member }}</td>
+              <td>{{ reservation.facility }}</td>
+              <td>{{ reservation.date }}</td>
+              <td><span class="admin-status" [class.pending]="reservation.status === 'Pending'">{{ reservation.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-header">
+        <div>
+          <p class="admin-eyebrow">Payments</p>
+          <h2>Recent payment</h2>
         </div>
-        
-        <!-- 🔹 Recent Reservations -->
-        <div class="bg-white p-6 rounded-xl shadow-lg text-blue-900">
-            <p class="text-2xl font-semibold mb-4">📅 Recent Reservations</p>
-            <table class="w-full border-collapse rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="p-3 text-left">Member</th>
-                        <th class="p-3 text-left">Facility</th>
-                        <th class="p-3 text-left">Date</th>
-                        <th class="p-3 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b hover:bg-gray-100" *ngFor="let reservation of reservations">
-                        <td class="p-3">{{ reservation.member }}</td>
-                        <td class="p-3">{{ reservation.facility }}</td>
-                        <td class="p-3">{{ reservation.date }}</td>
-                        <td class="p-3 text-green-600 font-semibold">{{ reservation.status }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-lg text-blue-900">
-            <p class="text-2xl font-semibold mb-4">📅 Recent Payment</p>
-            <table class="w-full border-collapse rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="p-3 text-left">Member</th>
-                        <th class="p-3 text-left">Facility</th>
-                        <th class="p-3 text-left">Date</th>
-                        <th class="p-3 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b hover:bg-gray-100" *ngFor="let reservation of reservations">
-                        <td class="p-3">{{ reservation.member }}</td>
-                        <td class="p-3">{{ reservation.facility }}</td>
-                        <td class="p-3">{{ reservation.date }}</td>
-                        <td class="p-3 text-green-600 font-semibold">{{ reservation.status }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-  </div>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Facility</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reservation of reservations">
+              <td>{{ reservation.member }}</td>
+              <td>{{ reservation.facility }}</td>
+              <td>{{ reservation.date }}</td>
+              <td><span class="admin-status" [class.pending]="reservation.status === 'Pending'">{{ reservation.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

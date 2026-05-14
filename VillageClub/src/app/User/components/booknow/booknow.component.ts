@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, OnInit, ChangeDetectorRef, NgZone, Inject, PLATFORM_ID } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { FlowbiteService } from '../../../Service/flowbite service/flowbite.service';
 import flatpickr from 'flatpickr';
@@ -15,16 +16,23 @@ export class BooknowComponent implements OnInit, AfterViewInit {
   constructor(
     private flowbiteService: FlowbiteService,
     private cdRef: ChangeDetectorRef, // Inject ChangeDetectorRef
-    private ngZone: NgZone  // Inject NgZone for manual zone running
+    private ngZone: NgZone,  // Inject NgZone for manual zone running
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.flowbiteService.loadFlowbite(() => {
+        initFlowbite();
+      });
+    }
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const today = new Date();
     const maxDate = new Date();
     maxDate.setDate(today.getDate() + 7); // เพิ่ม 7 วันให้กับวันที่ปัจจุบัน

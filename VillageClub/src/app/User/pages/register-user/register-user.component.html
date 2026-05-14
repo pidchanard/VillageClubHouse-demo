@@ -1,57 +1,96 @@
-<div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-200 to-gray-300">
-    <div class="flex w-[900px] h-[500px] shadow-lg rounded-lg overflow-hidden bg-white">
+<main class="register-page">
+  <section class="register-card">
+    <aside class="register-hero">
+      <img src="สนามเทนนิส.webp" alt="Tennis court">
+      <div class="register-hero-overlay"></div>
 
-        <!-- Left Side - Welcome Message -->
-        <div class="w-1/2 bg-gradient-to-r from-purple-500 to-purple-700 flex flex-col items-center justify-center p-10 text-white">
-            <h2 class="text-3xl font-bold">Welcome!</h2>
-            <p class="text-center text-sm mt-4">BanDee is about club house system</p>
-            <button type="button"
-                class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-6"
-                (click)="goLogin()">Sign In</button>
+      <div class="register-hero-content">
+        <p class="hero-kicker">BanDee Club</p>
+        <h2>Start your club journey today.</h2>
+        <p class="hero-copy">
+          Create your account and book courts, pools, event rooms, and services in a smoother club house experience.
+        </p>
+
+        <div class="hero-stats">
+          <div>
+            <span>Member</span>
+            <strong>Quick setup</strong>
+          </div>
+          <div class="accent">
+            <span>Access</span>
+            <strong>All facilities</strong>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="register-form-panel">
+      <p class="register-kicker">Village Club House</p>
+
+      <div class="register-heading-row">
+        <img src="logoSportclub.png" alt="Sport Club" class="register-logo">
+        <h1>Create<br>account</h1>
+      </div>
+
+      <p class="register-subtitle">
+        Join BanDee to reserve facilities, track bookings, and manage your member profile.
+      </p>
+
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" novalidate class="register-form">
+        <div class="register-grid">
+          <label>
+            <span>First name</span>
+            <input type="text" placeholder="First name" formControlName="firstName">
+          </label>
+
+          <label>
+            <span>Last name</span>
+            <input type="text" placeholder="Last name" formControlName="lastName">
+          </label>
         </div>
 
-        <!-- Right Side - Form -->
-        <div class="w-1/2 p-10">
-            <h2 class="text-3xl font-bold text-gray-800 text-center">Sign Up</h2>
+        <label>
+          <span>ID card</span>
+          <input type="text" placeholder="13 digit ID card" formControlName="idCard" [maxLength]="13">
+        </label>
 
-            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" novalidate>
-                <div class="space-y-4 mt-6">
+        <div class="register-grid">
+          <label>
+            <span>Email</span>
+            <input type="email" placeholder="you@example.com" formControlName="email">
+          </label>
 
-                    <!-- Name & Surname -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" placeholder="First Name" formControlName="firstName"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                        <input type="text" placeholder="Last Name" formControlName="lastName"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                    </div>
-
-                    <!-- ID Card -->
-                    <input type="text" placeholder="ID Card" formControlName="idCard" [maxLength]="13"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-
-                    <!-- Email & Phone -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="email" placeholder="Email" formControlName="email" 
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                        <input type="text" placeholder="Phone" formControlName="phone"[maxLength]="10"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                    </div>
-
-                    <!-- Password & Confirm Password -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="password" placeholder="Password" formControlName="password" [maxLength]="10"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                        <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" [maxLength]="10"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:outline-none">
-                    </div>
-
-                    <!-- Sign Up Button -->
-                    <button class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition"
-                        type="submit" (click)="onSubmit()">
-                        Sign Up
-                    </button>
-                </div>
-            </form>
+          <label>
+            <span>Phone</span>
+            <input type="text" placeholder="08xxxxxxxx" formControlName="phone" [maxLength]="10">
+          </label>
         </div>
+
+        <div class="register-grid">
+          <label>
+            <span>Password</span>
+            <input type="password" placeholder="Enter password" formControlName="password" [maxLength]="10">
+          </label>
+
+          <label>
+            <span>Confirm</span>
+            <input type="password" placeholder="Confirm password" formControlName="confirmPassword" [maxLength]="10">
+          </label>
+        </div>
+
+        <p class="register-error" *ngIf="signUpForm.errors?.['mismatch'] && signUpForm.get('confirmPassword')?.touched">
+          Passwords do not match
+        </p>
+
+        <button type="submit" [disabled]="signUpForm.invalid" class="register-submit">
+          Sign up
+        </button>
+
+        <p class="register-switch">
+          Already a member?
+          <button type="button" (click)="goLogin()">Login</button>
+        </p>
+      </form>
     </div>
-</div>
+  </section>
+</main>

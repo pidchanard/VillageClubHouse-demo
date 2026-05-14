@@ -1,80 +1,86 @@
-<div class="flex h-screen">
-    <!-- ✅ Sidebar -->
-    <app-adminsidebar></app-adminsidebar>
-    <div class="flex-1 flex flex-col h-screen bg-gray-100 p-6 space-y-6">
-      <!-- 🔹 Header -->
-      <div class="flex justify-between items-center bg-white text-blue-900 p-5 rounded-xl shadow-lg">
-        <div class="flex items-center space-x-3">
-          <input type="text"  placeholder="Search..." 
-                 class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-teal-300">
-          <button (click)="performSearch()" 
-                  class="bg-teal-500 px-4 py-2 rounded-lg shadow-md hover:bg-teal-600">
-            🔍 Search
-          </button>
-        </div>
-      </div>
-      
-      <!-- 🔹 Key Statistics -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <p class="text-lg font-semibold">Total Employee</p>
-          <p class="text-3xl font-bold text-blue-600">{{ employee.length }}</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <p class="text-lg font-semibold">Active Employee</p>
-          <p class="text-3xl font-bold text-green-600">{{ activeEmployeeCount }}</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <p class="text-lg font-semibold">Add Employee</p>
-          <button (click)="toggleModal()" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Add Employee</button>
+<div class="admin-shell">
+  <app-adminsidebar></app-adminsidebar>
 
+  <main class="admin-main">
+    <section class="admin-topbar">
+      <div>
+        <p class="admin-eyebrow">Team Management</p>
+        <h1>Employees</h1>
+      </div>
+      <div class="admin-search">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" placeholder="Search employee..." [(ngModel)]="searchQuery">
+        <button type="button" (click)="performSearch()">Search</button>
+      </div>
+    </section>
+
+    <section class="admin-stats compact">
+      <article class="admin-stat-card">
+        <span>Total Employee</span>
+        <strong>{{ employee.length }}</strong>
+        <small>All staff accounts</small>
+      </article>
+      <article class="admin-stat-card success">
+        <span>Active Employee</span>
+        <strong>{{ activeEmployeeCount }}</strong>
+        <small>Currently active</small>
+      </article>
+      <article class="admin-stat-card action-card">
+        <span>Add Employee</span>
+        <button type="button" class="admin-action" (click)="toggleModal()">Add Employee</button>
+      </article>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-header">
+        <div>
+          <p class="admin-eyebrow">Directory</p>
+          <h2>All employee</h2>
         </div>
       </div>
-      
-      <!-- 🔹 Recent Reservations -->
-      <div class="bg-white p-6 rounded-xl shadow-lg text-blue-900">
-        <p class="text-2xl font-semibold mb-4">📅 All Employee</p>
-        <table class="w-full border-collapse rounded-lg overflow-hidden">
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
           <thead>
-            <tr class="bg-blue-500 text-white">
-              <th class="p-3 text-left">Name</th>
-              <th class="p-3 text-left">Position</th>
-              <th class="p-3 text-left">Address</th>
-              <th class="p-3 text-left">Phone</th>
-              <th class="p-3 text-left">Status</th>
-              <th class="p-3 text-left">Edit</th>
-              <th class="p-3 text-left">Delete</th>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b hover:bg-gray-100" *ngFor="let emp of employee">
-              <td class="p-3">{{ emp.firstName }} {{ emp.lastName }}</td> 
-              <td class="p-3">{{ emp.position }}</td> 
-              <td class="p-3">{{ emp.address }}</td> 
-              <td class="p-3">{{ emp.phone }}</td> 
-              <td class="p-3 text-green-600 font-semibold">{{ emp.status }}</td> 
-              <td class="p-3">
-                <button type="button" (click)="editEmployee(emp)" 
-                        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                  Edit
-                </button>
+            <tr *ngFor="let emp of employee">
+              <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+              <td>{{ emp.position }}</td>
+              <td>{{ emp.address }}</td>
+              <td>{{ emp.phone }}</td>
+              <td><span class="admin-status">{{ emp.status }}</span></td>
+              <td>
+                <div class="admin-row-actions">
+                  <button type="button" class="icon-action edit" (click)="editEmployee(emp)">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button type="button" class="icon-action delete" (click)="deleteEmployee(emp.id)">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </div>
               </td>
-              
-              <td class ="p-3"> <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" 
-                (click)="deleteEmployee(emp.id)">
-                Delete
-              </button></td>
-            </tr>      
+            </tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
+</div>
 
-  <app-emp-modal *ngIf="showModal" (closeModal)="toggleModal()"></app-emp-modal>
+<app-emp-modal *ngIf="showModal" (closeModal)="toggleModal()"></app-emp-modal>
 
- <app-emp-edit-modal *ngIf="showModal1" 
-                    [employee]="selectedEmployee" 
-                    (closeModal)="toggleModal1()" 
-                    (updateEmployee)="updateEmployee($event)">
+<app-emp-edit-modal
+  *ngIf="showModal1"
+  [employee]="selectedEmployee"
+  (closeModal)="toggleModal1()"
+  (updateEmployee)="updateEmployee($event)">
 </app-emp-edit-modal>

@@ -1,20 +1,22 @@
 <app-header-user></app-header-user>
 
-<div class="container mx-auto px-4 py-10 mt-16">
-  <h2 class="text-2xl font-bold text-white text-center mb-4 bg-gray-900 py-3 rounded">📢 ประกาศสถานะการใช้งาน</h2>
-  <p class="text-sm text-gray-300 text-center mb-8">📅 อัปเดตล่าสุด: <span id="updateTime" class="font-semibold text-white"></span></p>
+<main class="user-page">
+  <section class="page-hero compact">
+    <p class="eyebrow">{{ text.eyebrow }}</p>
+    <h1>{{ text.title }}</h1>
+    <p>{{ text.subtitle }} <strong id="updateTime"></strong></p>
+  </section>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <div *ngFor="let fac of facilities" class="card bg-gray-900 rounded-lg shadow-lg overflow-hidden text-white">
-      <div class="p-5">
-        <h3 class="text-xl font-bold mb-2">{{ fac.fac_Name }}</h3>
-        <img [src]="fac.fac_img" [alt]="fac.fac_Name" class="rounded-xl mb-3 w-full">
-        <ul class="space-y-2">
-          <p class="text-sm text-green-300 mt-1">Status: {{ fac.fac_Status }}</p>
-        </ul>
+  <section class="facility-list">
+    <article *ngFor="let fac of facilities" class="modern-card facility-card">
+      <img [src]="fac.fac_img" [alt]="getFacilityName(fac)">
+      <div class="facility-card-body">
+        <div>
+          <p class="eyebrow">{{ text.facility }}</p>
+          <h2>{{ getFacilityName(fac) }}</h2>
+        </div>
+        <span class="status-pill">{{ getStatusLabel(fac.fac_Status) }}</span>
       </div>
-    </div>
-  </div>
-  
-</div>
-
+    </article>
+  </section>
+</main>

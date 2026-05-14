@@ -1,130 +1,88 @@
 <app-header-user></app-header-user>
 
-<div class="container mx-auto px-4 py-10 mt-16">
-  <p class="text-4xl font-bold text-white text-center mb-4 bg-gray-900 py-3 rounded"> 📅 Reservation  </p>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div *ngFor="let fac of facilities" class="card bg-gray-900 rounded-lg shadow-lg overflow-hidden text-white w-full">
-      <div class="p-5 flex flex-col items-center justify-center">
-        <div class="flex justify-center w-full">
-          <app-dropdown class="inline-block"></app-dropdown>
+<main class="user-page">
+  <section class="page-hero compact">
+    <p class="eyebrow">{{ text.eyebrow }}</p>
+    <h1>{{ text.title }}</h1>
+    <p>{{ text.subtitle }}</p>
+  </section>
+
+  <section class="facility-list">
+    <article *ngFor="let fac of facilities" class="modern-card facility-card">
+      <img [src]="fac.fac_img" [alt]="getFacilityName(fac)">
+      <div class="facility-card-body">
+        <div>
+          <p class="eyebrow">{{ text.facility }}</p>
+          <h2>{{ getFacilityName(fac) }}</h2>
+          <p>{{ getFacilityDescription(fac) }}</p>
         </div>
-        <figure class="px-5 pt-1">
-          <img [src]="fac.fac_img" [alt]="fac.fac_Name" class="rounded-xl" />
-        </figure>
-        <h3 class="card-title text-white">{{ fac.fac_Name }}</h3>
-        <p class="text-gray-300">{{ fac.fac_Description }}</p>
-        <p class="text-sm text-green-300 mt-1">Status: {{ fac.fac_Status }}</p>
-        <div class="flex justify-center w-full">
-          <button (click)="openModal(fac)"
-            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            type="button">
-            Book Now
+        <div class="facility-actions">
+          <span class="status-pill">{{ getStatusLabel(fac.fac_Status) }}</span>
+          <button type="button" class="modern-action" (click)="openModal(fac)">
+            {{ text.bookNow }}
           </button>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </article>
+  </section>
+</main>
 
-<!-- ✅ MODAL (Dynamic) -->
-<div *ngIf="selectedFacility" id="dynamic-modal" class="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/50">
-  <div class="relative p-4 w-full max-w-2xl bg-white rounded-lg shadow-md dark:bg-gray-700">
-
-    <!-- Modal Header -->
-    <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
-      <p class="text-xl font-semibold text-gray-900 dark:text-white">
-        ยืนยันการจอง {{ selectedFacility.fac_Name }}
-      </p>
-      <button type="button"
-        class="text-gray-400 hover:bg-gray-200 rounded-lg text-sm w-8 h-8"
-        (click)="closeModal()">
-        <svg class="w-4 h-4 m-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-        </svg>
+<div *ngIf="selectedFacility" class="booking-backdrop">
+  <section class="booking-modal">
+    <div class="booking-modal-header">
+      <div>
+        <p class="eyebrow">{{ text.booking }}</p>
+        <h2>{{ getFacilityName(selectedFacility) }}</h2>
+      </div>
+      <button type="button" class="modal-close" (click)="closeModal()">
+        <span class="material-symbols-outlined">close</span>
       </button>
     </div>
 
-    <!-- Modal Content -->
-    <div class="p-5">
-      <div class="flex flex-col sm:flex-row sm:space-x-14">
-        <!-- Date Picker -->
-        <div class="relative max-w-sm">
-          <svg class="ml-2 mt-3 absolute w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-          </svg>
-          <input id="datepicker" type="text" placeholder="Select date"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
-        </div>
+    <div class="booking-modal-body">
+      <div class="booking-grid">
+        <label class="booking-field">
+          <span>{{ text.selectDate }}</span>
+          <input id="datepicker" type="text" [placeholder]="text.selectDate">
+        </label>
 
-        <!-- Time Slots -->
-        <div class="px-5 sm:ms-7 sm:border-s border-gray-200 dark:border-gray-800 w-full sm:max-w-[15rem]">
-          <p class="text-gray-900 dark:text-white text-base font-medium mb-3 text-center">
-            {{ reservationDate || 'Select a date' }}
-          </p>
-
-          <ul class="flex flex-col w-full gap-2 mt-5">
-            <li *ngFor="let slot of timetables; let i = index">
+        <div class="time-panel">
+          <span>{{ reservationDate || text.noDate }}</span>
+          <div class="time-grid">
+            <label *ngFor="let slot of timetables; let i = index" class="time-slot">
               <input
-                  type="radio"
-                  [id]="'slot' + i"
-                  class="hidden peer"
-                  name="timetable"
-                  [(ngModel)]="selectedSlot"
-                  [value]="slot" />
-              <label [for]="'slot' + i"
-                class="inline-flex items-center justify-center w-full p-2 text-sm font-medium bg-white border rounded-lg cursor-pointer text-blue-600 border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white hover:bg-blue-500 dark:bg-gray-900">
-                {{ slot.label }}
-              </label>
-            </li>
-          </ul>
+                type="radio"
+                [id]="'slot' + i"
+                name="timetable"
+                [(ngModel)]="selectedSlot"
+                [value]="slot">
+              <span>{{ slot.label }}</span>
+            </label>
+          </div>
         </div>
       </div>
 
-      <!-- ✅ QR Code (แสดงหลังยืนยันการจอง) -->
-      <figure class="mt-5 text-center" *ngIf="showQRCode">
-        <img src="คิวอาโค้ด.jpg" alt="คิวอาโค้ด" class="rounded-xl mx-auto" />
-      
-        <!-- 💰 ยอดเงิน -->
-        <p class="mt-3 text-lg font-medium text-gray-800 dark:text-white">
-          ยอดชำระเงิน: {{ calculateTotalPrice() | currency:'THB':'symbol-narrow' }}
-        </p>
-      
-        <!-- 💳 ช่องเลือกวิธีชำระเงิน -->
-        <div class="mt-3">
-          <label for="paymentMethod" class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">เลือกวิธีชำระเงิน</label>
-          <select id="paymentMethod" [(ngModel)]="paymentMethod"
-            class="w-60 px-4 py-2 border rounded-lg text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
-            <option value=""  selected>-- กรุณาเลือก --</option>
-            <option value="promptpay">PromptPay</option>
-            <option value="credit">Credit Card</option>
-            <!-- เพิ่มได้ในอนาคต เช่น -->
-            <!-- <option value="credit">Credit Card</option> -->
-          </select>
-        </div>
-      
-        <!-- ✅ ปุ่มชำระเงิน -->
-        <button class="mt-4 px-5 py-2 text-white bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium"
-          [disabled]="!paymentMethod" (click)="payNow()">
-          ชำระเงิน
+      <div class="payment-panel" *ngIf="showQRCode">
+        <img src="คิวอาโค้ด.jpg" alt="QR code">
+        <strong>{{ text.total }} {{ calculateTotalPrice() | currency:'THB':'symbol-narrow' }}</strong>
+        <select [(ngModel)]="paymentMethod">
+          <option value="">{{ text.choosePayment }}</option>
+          <option value="promptpay">PromptPay</option>
+          <option value="credit">{{ currentLanguage === 'en' ? 'Credit Card' : 'บัตรเครดิต' }}</option>
+        </select>
+        <button class="modern-action" [disabled]="!paymentMethod" (click)="payNow()">
+          {{ text.pay }}
         </button>
-      </figure>
+      </div>
 
-      <p class="mt-5 text-center text-base text-gray-500 dark:text-gray-400">
-        ทางเราจะไม่คืนเงินมัดจำทุกกรณี หากท่านไม่สามารถมาใช้บริการตามวันและเวลาที่จองไว้
-      </p>
+      <p class="booking-note">{{ text.note }}</p>
     </div>
 
-    <!-- Modal Footer -->
-    <div class="flex items-center justify-end p-4 border-t dark:border-gray-600">
-      <button *ngIf="!showQRCode" (click)="confirmReservation()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5">
-        Confirm
-      </button>
-      <button (click)="closeModal()"
-        class="ml-3 py-2.5 px-5 text-sm font-medium text-gray-900 bg-white border rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400">
-        Cancel
+    <div class="booking-modal-footer">
+      <button type="button" class="secondary-modern-action" (click)="closeModal()">{{ text.cancel }}</button>
+      <button *ngIf="!showQRCode" type="button" class="modern-action" (click)="confirmReservation()">
+        {{ text.confirm }}
       </button>
     </div>
-  </div>
+  </section>
 </div>

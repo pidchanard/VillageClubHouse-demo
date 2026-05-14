@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import Swal from 'sweetalert2';
 import { initFlowbite } from 'flowbite';
+import { AppLanguage, LanguageService } from '../../../Service/language.service';
 
 @Component({
   selector: 'app-header-user',
@@ -13,6 +14,45 @@ import { initFlowbite } from 'flowbite';
 })
 export class HeaderUserComponent implements OnInit {
   isModalOpen = false;
+  currentLanguage: AppLanguage = 'th';
+  private readonly labels = {
+    th: {
+      status: 'สถานะ',
+      reservation: 'จองสนาม',
+      history: 'ประวัติ',
+      about: 'เกี่ยวกับเรา',
+      team: 'สร้างโดยทีม BanDee',
+      language: 'เปลี่ยนภาษา',
+      profile: 'โปรไฟล์',
+      logout: 'ออกจากระบบ',
+      editProfile: 'แก้ไขข้อมูลส่วนตัว',
+      firstName: 'ชื่อ',
+      lastName: 'นามสกุล',
+      phone: 'เบอร์โทร',
+      birthdate: 'วันเกิด',
+      newPassword: 'รหัสผ่านใหม่',
+      cancel: 'ยกเลิก',
+      save: 'บันทึก'
+    },
+    en: {
+      status: 'Status',
+      reservation: 'Reservation',
+      history: 'History',
+      about: 'About Us',
+      team: 'Created by BanDee team',
+      language: 'Change language',
+      profile: 'Profile',
+      logout: 'Logout',
+      editProfile: 'Edit profile',
+      firstName: 'First name',
+      lastName: 'Last name',
+      phone: 'Phone',
+      birthdate: 'Birthdate',
+      newPassword: 'New password',
+      cancel: 'Cancel',
+      save: 'Save changes'
+    }
+  };
   // สร้างตัวแปรเพื่อเก็บข้อมูลที่ผู้ใช้กรอก
   userData = {
     FirstName: '',
@@ -38,13 +78,29 @@ export class HeaderUserComponent implements OnInit {
     private http: HttpClient,
     private flowbiteService: FlowbiteService,
     private router: Router,
+    private languageService: LanguageService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
+    if (isPlatformBrowser(this.platformId)) {
+      this.flowbiteService.loadFlowbite(() => {
+        initFlowbite();
+      });
+    }
+
+    this.currentLanguage = this.languageService.current;
+    this.languageService.language$.subscribe(language => {
+      this.currentLanguage = language;
     });
+  }
+
+  label(key: keyof typeof this.labels.en): string {
+    return this.labels[this.currentLanguage][key];
+  }
+
+  toggleLanguage(): void {
+    this.languageService.toggle();
   }
 
   // ฟังก์ชัน logout
@@ -57,6 +113,10 @@ export class HeaderUserComponent implements OnInit {
 
   // ฟังก์ชันสำหรับอัปเดตข้อมูลผู้ใช้
   updateUser(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const token = localStorage.getItem('token');
   
     if (!token) {
@@ -96,6 +156,10 @@ export class HeaderUserComponent implements OnInit {
     });
   }
   loadUserData(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const token = localStorage.getItem('token');
     
     if (!token) {

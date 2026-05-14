@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { HeaderUserComponent } from './User/components/header-user/header-user.component';
-import { OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 
 @Component({
@@ -11,8 +10,12 @@ import { initFlowbite } from 'flowbite';
 export class AppComponent implements OnInit {
   title = 'VillageClub';
 
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
   ngOnInit(): void {
-    initFlowbite();
+    if (isPlatformBrowser(this.platformId)) {
+      initFlowbite();
+    }
   }
 
 }

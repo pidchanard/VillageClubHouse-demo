@@ -1,51 +1,32 @@
-<div class="flex h-screen bg-gradient-to-br from-blue-900 to-teal-700 text-white">
-    <!-- ✅ Sidebar (คลิกแล้วขยาย-ย่อได้) -->
-    <nav (click)="toggleSidebar()" 
-        [ngClass]="isSidebarOpen ? 'w-64' : 'w-24'" 
-        class="bg-gradient-to-b from-blue-900 to-teal-700 text-white h-full flex flex-col transition-all duration-300 p-4 cursor-pointer">
-        
-        <!-- 🔹 โลโก้ -->
-        <div class="flex items-center space-x-3">
-            <img class="h-12 drop-shadow-lg" src="logo.png" alt="Club Logo" />
-            <span *ngIf="isSidebarOpen" class="text-lg font-semibold">Sport Club</span>
-        </div>
-        
-        <!-- 🔹 เมนู -->
-        <ul class="mt-6 space-y-3">
-             <li>
-                <a href="/adminhome" class="flex items-center space-x-3 p-3 rounded-md hover:bg-teal-500 transition">
-                    <mat-icon>campaign</mat-icon>
-                    <span *ngIf="isSidebarOpen">Dashboard</span> 
-                </a>              
-            </li> 
-            <li>
-                <a href="/employee-manage" class="flex items-center space-x-3 p-3 rounded-md hover:bg-teal-500 transition">
-                    <mat-icon>person</mat-icon>
-                    <span *ngIf="isSidebarOpen">Employee</span> 
-                </a>
-            </li>
-            
-            <li>
-                <a href="/facility" class="flex items-center space-x-3 p-3 rounded-md hover:bg-teal-500 transition">
-                    <mat-icon>fitness_center</mat-icon>
-                    <span *ngIf="isSidebarOpen">Facilities</span>
-                </a>
-            </li>
-        </ul>
-        
-        <!-- 🔹 ส่วนล่าง (แสดงชื่อผู้ใช้ + Logout) -->
-        <div class="mt-auto space-y-3">
-            <!-- ✅ แสดงชื่อผู้ใช้ -->
-            <div class="p-3 text-center border-t border-white/20">
-                <span *ngIf="isSidebarOpen" class="text-sm font-semibold text-white">Welcome, {{ userName }}</span>
-            </div>
-            
-            <!-- ✅ Logout -->
-            <a href="#" class="flex items-center space-x-3 p-3 rounded-md hover:bg-red-500 transition" (click)="logoutUser()">
-                <i class="bi bi-box-arrow-left"></i>
-                <span *ngIf="isSidebarOpen">Logout</span>
-            </a>
-        </div>
-    </nav>
-    
-</div>
+<aside class="admin-sidebar" [class.collapsed]="!isSidebarOpen">
+  <button type="button" class="sidebar-brand" (click)="toggleSidebar()">
+    <img src="logo.png" alt="Sport Club">
+    <span *ngIf="isSidebarOpen">Sport Club</span>
+  </button>
+
+  <nav class="sidebar-menu">
+    <a routerLink="/adminhome" routerLinkActive="active">
+      <mat-icon>space_dashboard</mat-icon>
+      <span *ngIf="isSidebarOpen">Dashboard</span>
+    </a>
+    <a routerLink="/employee-manage" routerLinkActive="active">
+      <mat-icon>badge</mat-icon>
+      <span *ngIf="isSidebarOpen">Employee</span>
+    </a>
+    <a routerLink="/facility" routerLinkActive="active">
+      <mat-icon>fitness_center</mat-icon>
+      <span *ngIf="isSidebarOpen">Facilities</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-chip" *ngIf="isSidebarOpen">
+      <span>Welcome</span>
+      <strong>{{ userName }}</strong>
+    </div>
+    <button type="button" class="sidebar-logout" (click)="logoutUser()">
+      <mat-icon>logout</mat-icon>
+      <span *ngIf="isSidebarOpen">Logout</span>
+    </button>
+  </div>
+</aside>

@@ -1,209 +1,202 @@
-<div class="flex h-screen">
-    <!-- ✅ Sidebar -->
-    <app-adminsidebar></app-adminsidebar>
-  
-    <!-- ✅ Main Content -->
-    <div class="flex-1 flex flex-col h-screen bg-gray-100 p-6 space-y-6">
-        <!-- 🔹 Header -->
-        <div class="flex justify-between items-center bg-white text-blue-900 p-5 rounded-xl shadow-lg">
-            <div class="flex items-center space-x-3">
-                <input type="text"  placeholder="Search..." 
-                       class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-teal-300">
-                <button (click)="performSearch()" 
-                        class="bg-teal-500 px-4 py-2 rounded-lg shadow-md hover:bg-teal-600">
-                    🔍 Search
-                </button>
-            </div>
-        </div>
-  
-        <!-- 🔹 Key Statistics -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-3xl font-semibold">Number of Facility</p>
-                <p class="text-3xl font-bold text-blue-600">{{ facilities.length }}</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-3xl font-semibold">Active Facility</p>
-                <p class="text-3xl font-bold text-green-600">{{ activeFacilityCount }}</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-3xl font-semibold">Inactive Facility</p>
-                <p class="text-3xl font-bold text-red-600">{{ inactiveFacilityCount }}</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <p class="text-3xl font-semibold">Add Facility</p>
-                <button (click)="toggleAddModal()" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Add Facility</button>
-            </div>
-        </div>
+<div class="admin-shell">
+  <app-adminsidebar></app-adminsidebar>
 
-        <div *ngIf="showAddModal" class="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
-          <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
-            <h2 class="text-2xl font-semibold mb-4">Add Facility</h2>
-        
-            <form #addForm="ngForm" (ngSubmit)="addFacility()">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Facility Name -->
-                <div class="mb-4">
-                  <label for="new_fac_Name" class="block text-sm font-medium text-gray-700">Facility Name</label>
-                  <input id="new_fac_Name" type="text"
-                    [(ngModel)]="newFacility.fac_Name" name="new_fac_Name"
-                    required class="mt-1 p-2 border rounded-md w-full" [ngModelOptions]="{standalone: true}" />
-                </div>
-        
-                <!-- Facility Description -->
-                <div class="mb-4">
-                  <label for="new_fac_Description" class="block text-sm font-medium text-gray-700">Description</label>
-                  <input id="new_fac_Description" type="text"
-                    [(ngModel)]="newFacility.fac_Description" name="new_fac_Description"
-                    required class="mt-1 p-2 border rounded-md w-full" [ngModelOptions]="{standalone: true}" />
-                </div>
-        
-                <!-- Facility Capacity -->
-                <div class="mb-4">
-                  <label for="new_fac_Capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
-                  <input id="new_fac_Capacity" type="number"
-                    [(ngModel)]="newFacility.fac_Capacity" name="new_fac_Capacity"
-                    required class="mt-1 p-2 border rounded-md w-full" [ngModelOptions]="{standalone: true}" />
-                </div>
-        
-                <!-- Facility Status -->
-                <div class="mb-4">
-                  <label for="new_fac_Status" class="block text-sm font-medium text-gray-700">Status</label>
-                  <select id="new_fac_Status"
-                    [(ngModel)]="newFacility.fac_Status" name="new_fac_Status"
-                    required class="mt-1 p-2 border rounded-md w-full" [ngModelOptions]="{standalone: true}">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-              </div>
-        
-              <div class="flex justify-between mt-4">
-                <button type="button" (click)="toggleAddModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">
-                  Cancel
-                </button>
-                <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-md">
-                  Add Facility
-                </button>
-              </div>
-            </form>
-          </div>
+  <main class="admin-main">
+    <section class="admin-topbar">
+      <div>
+        <p class="admin-eyebrow">Facility Management</p>
+        <h1>Facilities</h1>
+      </div>
+      <div class="admin-search">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" placeholder="Search facility..." [(ngModel)]="searchQuery">
+        <button type="button" (click)="performSearch()">Search</button>
+      </div>
+    </section>
+
+    <section class="admin-stats">
+      <article class="admin-stat-card">
+        <span>Number of Facility</span>
+        <strong>{{ facilities.length }}</strong>
+        <small>Total facilities</small>
+      </article>
+      <article class="admin-stat-card success">
+        <span>Active Facility</span>
+        <strong>{{ activeFacilityCount }}</strong>
+        <small>Ready to book</small>
+      </article>
+      <article class="admin-stat-card warning">
+        <span>Inactive Facility</span>
+        <strong>{{ inactiveFacilityCount }}</strong>
+        <small>Temporarily closed</small>
+      </article>
+      <article class="admin-stat-card action-card">
+        <span>Add Facility</span>
+        <button type="button" class="admin-action" (click)="toggleAddModal()">Add Facility</button>
+      </article>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-header">
+        <div>
+          <p class="admin-eyebrow">Inventory</p>
+          <h2>All facilities</h2>
         </div>
-  
-        <!-- 🔹 Facility List -->
-        <div class="bg-white p-6 rounded-xl shadow-lg text-blue-900">
-            <p class="text-2xl font-semibold mb-4">📅 All Facilities</p>
-            <table class="w-full border-collapse rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="p-3 text-left">Name</th>
-                        <th class="p-3 text-left">Status</th>
-                        <th class="p-3 text-left">Capacity</th>
-                        <th class="p-3 text-left">Used</th>
-                        <th class="p-3 text-left">Empty</th>
-                        <th class="p-3 text-left">Edit</th>
-                        <th class="p-3 text-left">Time Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b hover:bg-gray-100" *ngFor="let facility of facilities">
-                        <td class="p-3">{{ facility.fac_Name }}</td>
-                        <td class="p-3">{{ facility.fac_Status }}</td>
-                        <td class="p-3">{{ facility.fac_Capacity }}</td>
-                        <td class="p-3">{{ facility.fac_Used }}</td>
-                        <td class="p-3">{{ facility.fac_Empty }}</td>
-                        <td class="p-3">
-                            <button type="button" (click)="toggleEditModal(facility)" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Edit</button>
-                        </td>
-                        <td class="p-3">
-                          <button type="button" (click)="toggleTimeEditModal(facility)" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Time</button>
-                      </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Capacity</th>
+              <th>Used</th>
+              <th>Empty</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let facility of facilities">
+              <td>{{ facility.fac_Name }}</td>
+              <td><span class="admin-status" [class.inactive]="facility.fac_Status === 'Inactive'">{{ facility.fac_Status }}</span></td>
+              <td>{{ facility.fac_Capacity }}</td>
+              <td>{{ facility.fac_Used }}</td>
+              <td>{{ facility.fac_Empty }}</td>
+              <td>
+                <div class="admin-row-actions">
+                  <button type="button" class="icon-action edit" (click)="toggleEditModal(facility)">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button type="button" class="icon-action time" (click)="toggleTimeEditModal(facility)">
+                    <span class="material-symbols-outlined">schedule</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div *ngIf="showAddModal" class="admin-modal-backdrop">
+  <section class="admin-modal">
+    <div class="admin-modal-header">
+      <div>
+        <p class="admin-eyebrow">New Facility</p>
+        <h2>Add facility</h2>
+      </div>
+      <button type="button" class="modal-close" (click)="toggleAddModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
-  </div>
-  
-  <!-- Modal for editing facility -->
-  <div *ngIf="showEditModal" class="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
-      <h2 class="text-2xl font-semibold mb-4">Edit Facility</h2>
-      <form (ngSubmit)="editFacility()">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Facility Name -->
-          <div class="mb-4">
-            <label for="fac_Name" class="block text-sm font-medium text-gray-700">Facility Name</label>
-            <input id="fac_Name" type="text" [(ngModel)]="selectedFacility.fac_Name" name="fac_Name" required class="mt-1 p-2 border rounded-md w-full"/>
-          </div>
-  
-          <!-- Facility Description -->
-          <div class="mb-4">
-            <label for="fac_Description" class="block text-sm font-medium text-gray-700">Description</label>
-            <input id="fac_Description" type="text" [(ngModel)]="selectedFacility.fac_Description" name="fac_Description" required class="mt-1 p-2 border rounded-md w-full"/>
-          </div>
-  
-          <!-- Facility Capacity -->
-          <div class="mb-4">
-            <label for="fac_Capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
-            <input id="fac_Capacity" type="number" [(ngModel)]="selectedFacility.fac_Capacity" name="fac_Capacity" required class="mt-1 p-2 border rounded-md w-full"/>
-          </div>
-  
-          <!-- Facility Status (Dropdown) -->
-          <div class="mb-4">
-            <label for="fac_Status" class="block text-sm font-medium text-gray-700">Status</label>
-            <select id="fac_Status" [(ngModel)]="selectedFacility.fac_Status" name="fac_Status" required class="mt-1 p-2 border rounded-md w-full">
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-        </div>
-  
-        <div class="flex justify-between mt-4">
-          <button type="button" (click)="toggleEditModal(selectedFacility)" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
-          <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-md">Save Changes</button>
-        </div>
-      </form>
+
+    <form #addForm="ngForm" (ngSubmit)="addFacility()" class="admin-form">
+      <label>
+        <span>Facility Name</span>
+        <input type="text" [(ngModel)]="newFacility.fac_Name" name="new_fac_Name" required [ngModelOptions]="{standalone: true}">
+      </label>
+      <label>
+        <span>Description</span>
+        <input type="text" [(ngModel)]="newFacility.fac_Description" name="new_fac_Description" required [ngModelOptions]="{standalone: true}">
+      </label>
+      <label>
+        <span>Capacity</span>
+        <input type="number" [(ngModel)]="newFacility.fac_Capacity" name="new_fac_Capacity" required [ngModelOptions]="{standalone: true}">
+      </label>
+      <label>
+        <span>Status</span>
+        <select [(ngModel)]="newFacility.fac_Status" name="new_fac_Status" required [ngModelOptions]="{standalone: true}">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </label>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-secondary-action" (click)="toggleAddModal()">Cancel</button>
+        <button type="submit" class="admin-action">Add Facility</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<div *ngIf="showEditModal" class="admin-modal-backdrop">
+  <section class="admin-modal">
+    <div class="admin-modal-header">
+      <div>
+        <p class="admin-eyebrow">Facility Details</p>
+        <h2>Edit facility</h2>
+      </div>
+      <button type="button" class="modal-close" (click)="toggleEditModal(selectedFacility)">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
-  </div>
 
-  <div *ngIf="showEditModal1" class="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">
-      <h2 class="text-2xl font-semibold mb-4">Edit Time for {{ selectedFacility?.fac_Name }}</h2>
-      
-      <div class="space-y-4">
-        <div *ngFor="let slot of editableTimeSlots; let i = index" class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
-          
-          <input *ngIf="!slot.editing" [value]="slot.label" class="p-2 border rounded-md w-full bg-gray-100 cursor-pointer" readonly (click)="slot.editing = true"/>
-        <div *ngIf="slot.editing" class="flex gap-2">
-          <input type="time" [(ngModel)]="slot.start" (change)="updateLabel(slot)" step="3600" class="p-2 border rounded-md w-full"/>
-          <input type="time" [(ngModel)]="slot.end" (change)="updateLabel(slot)" step="3600" class="p-2 border rounded-md w-full"/>
+    <form (ngSubmit)="editFacility()" class="admin-form">
+      <label>
+        <span>Facility Name</span>
+        <input type="text" [(ngModel)]="selectedFacility.fac_Name" name="fac_Name" required>
+      </label>
+      <label>
+        <span>Description</span>
+        <input type="text" [(ngModel)]="selectedFacility.fac_Description" name="fac_Description" required>
+      </label>
+      <label>
+        <span>Capacity</span>
+        <input type="number" [(ngModel)]="selectedFacility.fac_Capacity" name="fac_Capacity" required>
+      </label>
+      <label>
+        <span>Status</span>
+        <select [(ngModel)]="selectedFacility.fac_Status" name="fac_Status" required>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </label>
 
-          <label class="flex items-center space-x-2">
-            <input type="checkbox" [(ngModel)]="slot.isAvailable" name="available{{i}}" />
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-secondary-action" (click)="toggleEditModal(selectedFacility)">Cancel</button>
+        <button type="submit" class="admin-action">Save Changes</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<div *ngIf="showEditModal1" class="admin-modal-backdrop">
+  <section class="admin-modal wide">
+    <div class="admin-modal-header">
+      <div>
+        <p class="admin-eyebrow">Timetable</p>
+        <h2>Edit time for {{ selectedFacility?.fac_Name }}</h2>
+      </div>
+      <button type="button" class="modal-close" (click)="toggleTimeEditModal(selectedFacility)">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <div class="time-editor">
+      <div *ngFor="let slot of editableTimeSlots; let i = index" class="time-editor-row">
+        <input *ngIf="!slot.editing" [value]="slot.label" readonly (click)="slot.editing = true">
+        <ng-container *ngIf="slot.editing">
+          <input type="time" [(ngModel)]="slot.start" (change)="updateLabel(slot)" step="3600">
+          <input type="time" [(ngModel)]="slot.end" (change)="updateLabel(slot)" step="3600">
+          <label class="inline-check">
+            <input type="checkbox" [(ngModel)]="slot.isAvailable" name="available{{i}}">
             <span>Available</span>
           </label>
-  
-          <div class="flex gap-2">
-            <button *ngIf="slot.slot_ID" (click)="editTimeSlot(slot)"  (click)="slot.editing = false" class="text-blue-600 hover:underline">Save</button>
-            <button *ngIf="!slot.slot_ID" (click)="addTimeSlotToDB(slot)" class="text-green-600 hover:underline">Add</button>
-            <button *ngIf="slot.slot_ID" (click)="deleteTimeSlot(slot.slot_ID)" class="text-red-500 hover:underline">Delete</button>
-          </div>
-        </div>
-      </div>
-  
-      <div class="mt-4">
-        <button type="button" (click)="addTimeSlot()" class="text-blue-600 hover:underline">
-          + Add Time Slot
-        </button>
-      </div>
-  
-      <div class="flex justify-between mt-6">
-        <button type="button" (click)="toggleTimeEditModal(selectedFacility)" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+          <button *ngIf="slot.slot_ID" type="button" class="admin-secondary-action" (click)="editTimeSlot(slot); slot.editing = false">Save</button>
+          <button *ngIf="!slot.slot_ID" type="button" class="admin-action" (click)="addTimeSlotToDB(slot)">Add</button>
+          <button *ngIf="slot.slot_ID" type="button" class="icon-action delete" (click)="deleteTimeSlot(slot.slot_ID)">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </ng-container>
       </div>
     </div>
-  </div>
-  
- 
-  
-  
+
+    <div class="admin-modal-actions">
+      <button type="button" class="admin-secondary-action" (click)="addTimeSlot()">Add Time Slot</button>
+      <button type="button" class="admin-action" (click)="toggleTimeEditModal(selectedFacility)">Done</button>
+    </div>
+  </section>
+</div>

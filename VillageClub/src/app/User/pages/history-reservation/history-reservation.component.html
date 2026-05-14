@@ -1,112 +1,58 @@
 <app-header-user></app-header-user>
 
+<main class="user-page">
+  <section class="page-hero compact">
+    <p class="eyebrow">{{ text.eyebrow }}</p>
+    <h1>{{ text.title }}</h1>
+    <p>{{ text.subtitle }} <strong id="updateTime"></strong></p>
+  </section>
 
-<div class="container mx-auto px-4 py-10 mt-16">
-  <p class="text-4xl font-bold text-white text-center mb-4 bg-gray-900 py-3 rounded">📢 Reservation History</p>
-  <p class="text-xl font-semibold">ข้อมูลผู้จอง</p>
-  <div class="mt-2" *ngIf="acc">
-    <p><span class="font-semibold">ชื่อ:</span> {{ acc?.firstName || '-' }} {{ acc?.lastName || '-' }}</p>
-    <p><span class="font-semibold">อีเมล:</span> {{ acc?.email || '-' }}</p>
-    <p><span class="font-semibold">เบอร์โทรศัพท์:</span> {{ acc?.phone || '-' }}</p>
-  </div>
-  
-  
-  
-  
-  <p class="text-sm text-gray-300 text-center mb-8">📅 อัปเดตล่าสุด: <span id="updateTime" class="font-semibold text-white"></span></p>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" class="px-6 py-3">ลำดับ</th>
-              <th scope="col" class="px-6 py-3">ชื่อสถานที่</th>
-              <th scope="col" class="px-6 py-3">วันที่จอง</th>
-              <th scope="col" class="px-6 py-3">ระยะเวลา</th>
-              <th scope="col" class="px-6 py-3"> ค่ามัดจำ </th>                
-              <th scope="col" class="px-6 py-3">สถานะชำระเงิน</th>    
-              <th scope="col" class="px-6 py-3">สถานะการจอง</th>             
-            </tr>
+  <section class="profile-summary modern-card" *ngIf="acc">
+    <div>
+      <span>{{ text.member }}</span>
+      <strong>{{ acc.firstName || '-' }} {{ acc.lastName || '-' }}</strong>
+    </div>
+    <div>
+      <span>Email</span>
+      <strong>{{ acc.email || '-' }}</strong>
+    </div>
+    <div>
+      <span>{{ text.phone }}</span>
+      <strong>{{ acc.phone || '-' }}</strong>
+    </div>
+  </section>
+
+  <section class="table-card modern-card">
+    <div class="table-card-header">
+      <h2>{{ text.tableTitle }}</h2>
+      <span>{{ reservations.length }} {{ text.items }}</span>
+    </div>
+
+    <div class="modern-table-wrap">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>{{ text.no }}</th>
+            <th>{{ text.facility }}</th>
+            <th>{{ text.date }}</th>
+            <th>{{ text.time }}</th>
+            <th>{{ text.deposit }}</th>
+            <th>{{ text.payment }}</th>
+            <th>{{ text.booking }}</th>
+          </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let r of reservations" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-            <td class="px-6 py-4">{{ r.r_id }}</td>   
-            <td class="px-6 py-4">{{ r.fac_Name }}</td>
-            <td class="px-6 py-4">{{ r.r_Date | date: 'dd/MM/yyyy' }}</td>
-            <td class="px-6 py-4">{{ r.r_Time}}</td>
-            <td class="px-6 py-4">{{ r.pay_Amount | currency:'THB':'symbol-narrow' }}</td>
-            <td class="px-6 py-4">
-              <span [ngClass]="{
-                'text-yellow-600 font-semibold': r.pay_Status === 'Pending',
-                'text-green-600 font-semibold': r.pay_Status === 'Compete',
-                'text-red-600 font-semibold': r.pay_Status === 'Fail'
-              }">
-                {{ r.pay_Status }}
-              </span>
-            </td>
-            <td class="px-6 py-4">
-              <span [ngClass]="{
-                'text-yellow-600 font-semibold': r.r_Status === 'Pending',
-                'text-green-600 font-semibold': r.r_Status === 'Accept ',
-                'text-red-600 font-semibold': r.r_Status === 'Rejected'
-              }">
-                {{ r.pay_Status }}
-              </span>
-            </td>
+          <tr *ngFor="let r of reservations">
+            <td>{{ r.r_id }}</td>
+            <td>{{ getFacilityName(r.fac_Name) }}</td>
+            <td>{{ r.r_Date | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ r.r_Time }}</td>
+            <td>{{ r.pay_Amount | currency:'THB':'symbol-narrow' }}</td>
+            <td><span class="status-pill">{{ getStatusLabel(r.pay_Status) }}</span></td>
+            <td><span class="status-pill">{{ getStatusLabel(r.r_Status || r.pay_Status) }}</span></td>
           </tr>
-          
-           
         </tbody>
-    </table>
-</div>
-  </div>
-
-
-
-  <!-- Modal -->
-<!-- <div 
-*ngIf="editReservation" 
-class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6">
-  <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">แก้ไขประวัติการจอง</h3>
-  
-  <form class="grid grid-cols-2 gap-4">
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ชื่อสถานที่</label>
-      <select [(ngModel)]="editReservation.facility" name="facility" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white">
-        <option disabled value="">-- เลือกสถานที่ --</option>
-        <option>ฟิตเนส</option>
-        <option>สระว่ายน้ำ</option>
-        <option>ห้องจัดเลี้ยง</option>
-        <option>สนามเทนนิส</option>
-        <option>สนามแบตมินตัน</option>
-        <option>สนามฟุตบอล</option>
-      </select>
-      
+      </table>
     </div>
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">วันที่จอง</label>
-      <input type="date" [(ngModel)]="editReservation.date" name="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white" />
-    </div>
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">เวลาเริ่ม</label>
-      <input type="time" [(ngModel)]="editReservation.time" name="time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white" />
-    </div>
-    
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">สถานะ</label>
-      <input
-      type="text"
-      [value]="editReservation.status"
-      readonly
-      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-white cursor-not-allowed"
-    />
-    </div>
-    
-  </form>
-
-  <div class="mt-6 flex justify-end space-x-2">
-    <button (click)="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">ยกเลิก</button>
-    <button (click)="saveEdit()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">บันทึก</button>
-  </div>
-</div>
-</div> -->
+  </section>
+</main>

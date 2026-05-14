@@ -1,93 +1,81 @@
-<nav class="fixed top-0 left-0 w-full bg-gray-100 text-purple-600 p-4 flex justify-between items-center z-50">
-  <!-- Logo -->
-  <a class="logo" routerLink="/home">
-    <img src="logoSportclub.png" alt="error logo" class="w-20">
+<nav class="site-nav">
+  <a class="nav-brand" routerLink="/home" aria-label="Sport Club home">
+    <img src="logoSportclub.png" alt="Sport Club">
+    <span>Sport Club</span>
   </a>
 
-  <!-- Navbar Links -->
-  <div class="space-x-4 flex items-center">
-    <a routerLink="/status" class="hover:text-gray-300">Status</a>
-    <a routerLink="/reservation" class="hover:text-gray-300">Reservation</a>
-    <a routerLink="/history" class="hover:text-gray-300">History</a>
-
-    <!-- About Us Dropdown -->
-    <div class="relative group">
-      <button class="hover:text-gray-300 flex items-center">
-        About Us
-        <svg class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-
-      <div class="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-lg ring-1 ring-gray-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
-        <div class="py-2 px-4 text-sm text-gray-700">Created by BanDee team</div>
-      </div>
+  <div class="nav-links">
+    <a routerLink="/status" routerLinkActive="active">{{ label('status') }}</a>
+    <a routerLink="/reservation" routerLinkActive="active">{{ label('reservation') }}</a>
+    <a routerLink="/history" routerLinkActive="active">{{ label('history') }}</a>
+    <div class="nav-about">
+      <button type="button">{{ label('about') }}</button>
+      <div class="about-panel">{{ label('team') }}</div>
     </div>
   </div>
 
-  <!-- User Profile and Logout -->
-  <div class="mr-5 flex space-x-3">
-    <!-- Edit Profile Button (with Face Icon) -->
-    <a class="hover:text-gray-300 cursor-pointer" (click)="openModal()">
-      <span class="material-symbols-outlined">face</span>
-    </a>
+  <div class="nav-actions">
+    <button class="lang-toggle" type="button" (click)="toggleLanguage()" [attr.aria-label]="label('language')">
+      {{ currentLanguage.toUpperCase() }}
+    </button>
 
-    <!-- Logout Button -->
-    <span class="material-symbols-outlined cursor-pointer" (click)="logout()">logout</span>
+    <button class="icon-button" type="button" (click)="openModal()" [attr.aria-label]="label('profile')">
+      <span class="material-symbols-outlined">account_circle</span>
+    </button>
+
+    <button class="icon-button" type="button" (click)="logout()" [attr.aria-label]="label('logout')">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
   </div>
 </nav>
 
-<!-- Modal edit profile -->
-<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-lg z-50 flex items-center justify-center">
-  <!-- Modal Content -->
-  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
-    <p class="text-2xl font-semibold text-gray-700 mb-6">Edit Profile</p>
-    <form (ngSubmit)="updateUser()">
-      <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Firstname Field -->
-        <div>
-          <label for="firstname" class="block text-sm font-medium text-gray-700">Firstname</label>
-          <input type="text" id="firstname" [(ngModel)]="userData.FirstName" name="firstname" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your firstname">
-        </div>
-      
-        <!-- Lastname Field -->
-        <div>
-          <label for="lastname" class="block text-sm font-medium text-gray-700">Lastname</label>
-          <input type="text" id="lastname" [(ngModel)]="userData.LastName" name="lastname" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your lastname">
-        </div>
+<div *ngIf="isModalOpen" class="profile-backdrop">
+  <section class="profile-modal">
+    <div class="profile-modal-header">
+      <div>
+        <p>{{ label('profile') }}</p>
+        <h2>{{ label('editProfile') }}</h2>
       </div>
+      <button type="button" class="icon-button dark" (click)="closeModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
 
-      <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-          <input type="text" id="phone" maxlength="10" [(ngModel)]="userData.Phone" name="phone" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your phone">
-        </div>
-      
-        <div>
-          <label for="birthdate" class="block text-sm font-medium text-gray-700">birthdate</label>
-          <input type="date" id="birthdate" [(ngModel)]="userData.BirthDate" name="birthdate" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-      </div>
+    <form (ngSubmit)="updateUser()" class="profile-form">
+      <label>
+        <span>{{ label('firstName') }}</span>
+        <input type="text" [(ngModel)]="userData.FirstName" name="firstname" placeholder="First name">
+      </label>
 
-      <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" [(ngModel)]="userData.Email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your email">
-      </div>
+      <label>
+        <span>{{ label('lastName') }}</span>
+        <input type="text" [(ngModel)]="userData.LastName" name="lastname" placeholder="Last name">
+      </label>
 
-      <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-700">New password</label>
-        <input type="password" id="password" maxlength="10" [(ngModel)]="userData.Password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter new password">
-      </div>
+      <label>
+        <span>{{ label('phone') }}</span>
+        <input type="text" maxlength="10" [(ngModel)]="userData.Phone" name="phone" placeholder="08xxxxxxxx">
+      </label>
 
-      <div class="flex space-x-3 mt-4">
-        <!-- Save Button -->
-        <button type="submit" class="w-1/2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">Save Changes</button>
+      <label>
+        <span>{{ label('birthdate') }}</span>
+        <input type="date" [(ngModel)]="userData.BirthDate" name="birthdate">
+      </label>
 
-        <!-- Close Button -->
-        <button type="button" (click)="closeModal()" class="w-1/2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">Close</button>
+      <label class="full">
+        <span>Email</span>
+        <input type="email" [(ngModel)]="userData.Email" name="email" placeholder="you@example.com">
+      </label>
+
+      <label class="full">
+        <span>{{ label('newPassword') }}</span>
+        <input type="password" maxlength="10" [(ngModel)]="userData.Password" name="password" placeholder="New password">
+      </label>
+
+      <div class="profile-actions">
+        <button type="button" class="secondary-action" (click)="closeModal()">{{ label('cancel') }}</button>
+        <button type="submit" class="save-action">{{ label('save') }}</button>
       </div>
     </form>
-  </div>
+  </section>
 </div>
-
